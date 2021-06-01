@@ -2,10 +2,10 @@
   <div class="app-container">
     <el-form :inline="true" :model="searchFrom" class="demo-form-inline" size="small">
       <el-form-item>
-        <el-input v-model="searchFrom.number" placeholder="用户编号"></el-input>
+        <el-input v-model="searchFrom.number" placeholder="用户编号" />
       </el-form-item>
       <el-form-item>
-        <el-input v-model="searchFrom.name" placeholder="用户名称"></el-input>
+        <el-input v-model="searchFrom.name" placeholder="用户名称" />
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="onSearch">查询</el-button>
@@ -19,7 +19,7 @@
       </el-table-column>
       <el-table-column label="头像" width="110" align="center">
         <template slot-scope="scope">
-          <el-avatar shape="square" :size="40" fit="fit" :src="scope.row.avatar"></el-avatar>
+          <el-avatar shape="square" :size="40" fit="fit" :src="scope.row.avatar" />
         </template>
       </el-table-column>
       <el-table-column label="昵称">
@@ -44,24 +44,23 @@
       </el-table-column>
       <el-table-column align="center" prop="created_at" label="创建时间" width="200">
         <template slot-scope="scope">
-          <i class="el-icon-time"/>
+          <i class="el-icon-time" />
           <span>{{ scope.row.create_date }}</span>
         </template>
       </el-table-column>
     </el-table>
     <div class="app-pagination">
       <el-pagination
-        @size-change="handleSizeChange"
-        @current-change="handleCurrentChange"
         :current-page="page"
         :page-sizes="[limit, 20, 50, 100]"
         layout="total, sizes, prev, pager, next, jumper"
-        @prev-click="handlePrevChange"
-        @next-click="handleNextChange"
         :page-size="limit"
         :total="total"
-      >
-      </el-pagination>
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+        @prev-click="handlePrevChange"
+        @next-click="handleNextChange"
+      />
     </div>
   </div>
 </template>
@@ -119,17 +118,17 @@ export default {
     onSearch() {
       this.fetchData()
     },
-    /*上一页*/
+    /* 上一页*/
     handlePrevChange(event) {
       this.page = event
       this.fetchData()
     },
-    /*下一页*/
+    /* 下一页*/
     handleNextChange(event) {
       this.page = event
       this.fetchData()
     },
-    /*数字点击*/
+    /* 数字点击*/
     handleCurrentChange(event) {
       this.page = event
       this.fetchData()
