@@ -1,7 +1,7 @@
 module.exports = {
-  title: '猪运通后台管理系统',
-  subTitle: '猪运通后台管理系统',
-  logo: 'http://pigpig22021.oss-cn-hangzhou.aliyuncs.com/imgs/index/logo.jpg',
+  title: '为学试卷 · 后台管理系统',
+  subTitle: '为学试卷 · 后台管理系统',
+  logo: 'https://weixuewebchat.oss-cn-hangzhou.aliyuncs.com/banner/logo.png',
   /**
    * @type {boolean} true | false
    * @description Whether fix the header

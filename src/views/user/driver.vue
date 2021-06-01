@@ -2,10 +2,10 @@
   <div class="app-container">
     <el-form :inline="true" :model="searchFrom" class="demo-form-inline" size="small">
       <el-form-item>
-        <el-input v-model="searchFrom.number" placeholder="用户编号"/>
+        <el-input v-model="searchFrom.number" placeholder="用户编号" />
       </el-form-item>
       <el-form-item>
-        <el-input v-model="searchFrom.name" placeholder="用户名称"/>
+        <el-input v-model="searchFrom.name" placeholder="用户名称" />
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="onSearch">查询</el-button>
@@ -19,7 +19,7 @@
       </el-table-column>
       <el-table-column label="用户头像" width="110" align="center">
         <template slot-scope="scope">
-          <el-avatar shape="square" :size="40" fit="fit" :src="scope.row.avatar"/>
+          <el-avatar shape="square" :size="40" fit="fit" :src="scope.row.avatar" />
         </template>
       </el-table-column>
       <el-table-column label="昵称">
@@ -43,8 +43,7 @@
             style="width: 60px; max-height: 60px"
             :src="scope.row.driver_licence"
             :preview-src-list="[scope.row.driver_licence]"
-          >
-          </el-image>
+          />
         </template>
       </el-table-column>
       <el-table-column label="驾驶证" width="150" align="center">
@@ -53,21 +52,20 @@
             style="width: 60px; max-height: 60px"
             :src="scope.row.driver_licence"
             :preview-src-list="[scope.row.driver_licence]"
-          >
-          </el-image>
+          />
         </template>
       </el-table-column>
       <el-table-column class-name="status-col" label="进度" width="110" align="center">
         <template slot-scope="scope">
           <el-tag :type="scope.row.driver_progress | progressFilter">{{
-              scope.row.driver_progress | progressText
-            }}
+            scope.row.driver_progress | progressText
+          }}
           </el-tag>
         </template>
       </el-table-column>
       <el-table-column align="center" prop="created_at" label="最新更新时间" width="200">
         <template slot-scope="scope">
-          <i class="el-icon-time"/>
+          <i class="el-icon-time" />
           <span>{{ scope.row.driver_update_date }}</span>
         </template>
       </el-table-column>
