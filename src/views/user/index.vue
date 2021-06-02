@@ -14,7 +14,7 @@
     <el-table v-loading="listLoading" :data="list" element-loading-text="Loading" border fit highlight-current-row>
       <el-table-column align="center" label="ID" width="80">
         <template slot-scope="scope">
-          {{ scope.row.user_id }}
+          {{ scope.row.userId }}
         </template>
       </el-table-column>
       <el-table-column label="头像" width="110" align="center">
@@ -66,7 +66,7 @@
 </template>
 
 <script>
-import { getList } from '@/api/table'
+import { getUserList } from '@/api/user'
 
 export default {
   filters: {
@@ -109,7 +109,7 @@ export default {
       const searchParams = this.searchFrom
       searchParams['page'] = this.page
       searchParams['limit'] = this.limit
-      getList(searchParams).then(response => {
+      getUserList(searchParams).then(response => {
         this.list = response.data.list
         this.total = response.data.total
         this.listLoading = false

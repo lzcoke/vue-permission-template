@@ -14,7 +14,7 @@
     <el-table v-loading="listLoading" :data="list" element-loading-text="Loading" border fit highlight-current-row>
       <el-table-column align="center" label="编号" width="80">
         <template slot-scope="scope">
-          {{ scope.row.user_id }}
+          {{ scope.row.userId }}
         </template>
       </el-table-column>
       <el-table-column label="用户头像" width="110" align="center">
@@ -35,7 +35,7 @@
       <el-table-column align="center" prop="created_at" label="创建时间" width="200">
         <template slot-scope="scope">
           <i class="el-icon-time" />
-          <span>{{ scope.row.create_date }}</span>
+          <span>{{ scope.row.createDate }}</span>
         </template>
       </el-table-column>
     </el-table>
