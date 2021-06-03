@@ -63,12 +63,6 @@ export const asyncRoutes = [
         name: 'Option',
         component: () => import('@/views/user/list'),
         meta: { title: '用户列表' }
-      },
-      {
-        path: 'driver',
-        name: 'Driver',
-        component: () => import('@/views/user/driver'),
-        meta: { title: '驾驶证信息' }
       }
     ]
   },

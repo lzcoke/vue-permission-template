@@ -38,3 +38,11 @@ export function getUserDriver(params) {
     params
   })
 }
+
+export function userBlock(data) {
+  return request({
+    url: '/backend/v1/userBlock',
+    method: 'post',
+    data
+  })
+}

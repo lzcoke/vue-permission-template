@@ -8,9 +8,17 @@
         <el-input v-model="searchFrom.name" placeholder="用户名称" />
       </el-form-item>
       <el-form-item>
+        <el-input v-model="searchFrom.email" placeholder="邮箱" />
+      </el-form-item>
+      <el-form-item>
         <el-button type="primary" @click="onSearch">查询</el-button>
       </el-form-item>
     </el-form>
+    <el-row class="tool">
+      <el-col :span="24">
+        <el-button type="primary" size="mini" @click="blocking(scope.row)">新增用户</el-button>
+      </el-col>
+    </el-row>
     <el-table v-loading="listLoading" :data="list" element-loading-text="Loading" border fit highlight-current-row>
       <el-table-column align="center" label="编号" width="80">
         <template slot-scope="scope">
@@ -22,9 +30,24 @@
           <el-avatar shape="square" :size="40" fit="fit" :src="scope.row.avatar" />
         </template>
       </el-table-column>
-      <el-table-column label="昵称">
+      <el-table-column label="昵称" align="center">
         <template slot-scope="scope">
           {{ scope.row.nickname }}
+        </template>
+      </el-table-column>
+      <el-table-column class-name="status-col" label="邮箱" align="center">
+        <template slot-scope="scope">
+          {{ scope.row.email }}
+        </template>
+      </el-table-column>
+      <el-table-column class-name="status-col" label="位置" align="center">
+        <template slot-scope="scope">
+          {{ scope.row.prov }} {{ scope.row.city }}
+        </template>
+      </el-table-column>
+      <el-table-column class-name="status-col" label="学校" align="center">
+        <template slot-scope="scope">
+          {{ scope.row.school }}
         </template>
       </el-table-column>
       <el-table-column class-name="status-col" label="性别" width="110" align="center">
@@ -36,6 +59,19 @@
         <template slot-scope="scope">
           <i class="el-icon-time" />
           <span>{{ scope.row.createDate }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column align="center" prop="created_at" label="状态" width="100">
+        <template slot-scope="scope">
+          <el-tag v-if="scope.row.block === 0" type="primary">使用中</el-tag>
+          <el-tag v-else type="danger">已冻结</el-tag>
+        </template>
+      </el-table-column>
+      <el-table-column align="center" prop="created_at" label="基本操作" width="200">
+        <template slot-scope="scope">
+          <el-button type="primary" size="mini" @click="blocking(scope.row)">修改密码</el-button>
+          <el-button v-if="scope.row.block === 0" type="danger" size="mini" @click="blocking(scope.row)">冻结</el-button>
+          <el-button v-else type="danger" size="mini" @click="blocking(scope.row)">解冻</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -56,7 +92,7 @@
 </template>
 
 <script>
-import { getUserList } from '@/api/user'
+import { getUserList, userBlock } from '@/api/user'
 
 export default {
   filters: {
@@ -81,7 +117,8 @@ export default {
     return {
       searchFrom: {
         name: '',
-        number: ''
+        number: '',
+        email: ''
       },
       list: null,
       listLoading: true,
@@ -126,6 +163,27 @@ export default {
     handleSizeChange(event) {
       this.limit = event
       this.fetchData()
+    },
+    blocking(event) {
+      this.$confirm('此操作将冻结该用户, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        userBlock({ userId: event.userId }).then(res => {
+          if (res.code === 200) {
+            this.$message.success('冻结成功')
+            this.fetchData()
+          } else {
+            this.$message.error('网络错误')
+          }
+        })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消操作'
+        })
+      })
     }
   }
 }
