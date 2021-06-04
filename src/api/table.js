@@ -7,3 +7,27 @@ export function getList(params) {
     params
   })
 }
+
+export function deleteAdminUser(data) {
+  return request({
+    url: '/vue-admin-template/table/list',
+    method: 'delete',
+    data
+  })
+}
+
+export function getAdminUserList(params) {
+  return request({
+    url: '/vue-admin-template/table/list',
+    method: 'get',
+    params
+  })
+}
+
+export function getAdminLog(params) {
+  return request({
+    url: '/vue-admin-template/table/list',
+    method: 'get',
+    params
+  })
+}

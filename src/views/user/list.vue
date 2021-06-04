@@ -2,13 +2,13 @@
   <div class="app-container">
     <el-form :inline="true" :model="searchFrom" class="demo-form-inline" size="small">
       <el-form-item>
-        <el-input v-model="searchFrom.number" placeholder="用户编号" />
+        <el-input v-model="searchFrom.number" placeholder="用户编号"/>
       </el-form-item>
       <el-form-item>
-        <el-input v-model="searchFrom.name" placeholder="用户名称" />
+        <el-input v-model="searchFrom.name" placeholder="用户名称"/>
       </el-form-item>
       <el-form-item>
-        <el-input v-model="searchFrom.email" placeholder="邮箱" />
+        <el-input v-model="searchFrom.email" placeholder="邮箱"/>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="onSearch">查询</el-button>
@@ -27,7 +27,7 @@
       </el-table-column>
       <el-table-column label="用户头像" width="110" align="center">
         <template slot-scope="scope">
-          <el-avatar shape="square" :size="40" fit="fit" :src="scope.row.avatar" />
+          <el-avatar shape="square" :size="40" fit="fit" :src="scope.row.avatar"/>
         </template>
       </el-table-column>
       <el-table-column label="昵称" align="center">
@@ -57,7 +57,7 @@
       </el-table-column>
       <el-table-column align="center" prop="created_at" label="创建时间" width="200">
         <template slot-scope="scope">
-          <i class="el-icon-time" />
+          <i class="el-icon-time"/>
           <span>{{ scope.row.createDate }}</span>
         </template>
       </el-table-column>
@@ -71,7 +71,7 @@
         <template slot-scope="scope">
           <el-button type="primary" size="mini" @click="blocking(scope.row)">修改密码</el-button>
           <el-button v-if="scope.row.block === 0" type="danger" size="mini" @click="blocking(scope.row)">冻结</el-button>
-          <el-button v-else type="danger" size="mini" @click="blocking(scope.row)">解冻</el-button>
+          <el-button v-else type="danger" size="mini" @click="cancelBlocking(scope.row)">解冻</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -92,7 +92,7 @@
 </template>
 
 <script>
-import { getUserList, userBlock } from '@/api/user'
+import { getUserList, userBlock, userCancelBlock } from '@/api/user'
 
 export default {
   filters: {
@@ -173,6 +173,27 @@ export default {
         userBlock({ userId: event.userId }).then(res => {
           if (res.code === 200) {
             this.$message.success('冻结成功')
+            this.fetchData()
+          } else {
+            this.$message.error('网络错误')
+          }
+        })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消操作'
+        })
+      })
+    },
+    cancelBlocking(event) {
+      this.$confirm('此操作将解冻该用户, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        userCancelBlock({ userId: event.userId }).then(res => {
+          if (res.code === 200) {
+            this.$message.success('解冻成功')
             this.fetchData()
           } else {
             this.$message.error('网络错误')

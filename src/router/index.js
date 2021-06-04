@@ -79,13 +79,6 @@ export const asyncRoutes = [
         meta: { title: '账号信息' }
       },
       {
-        path: 'adminEdit',
-        name: 'adminUserEdit',
-        component: () => import('@/views/option/adminUserEdit'),
-        meta: { title: '编辑账号信息', activeMenu: '/option/index' },
-        hidden: true
-      },
-      {
         path: 'log',
         name: 'Log',
         component: () => import('@/views/option/log'),

@@ -29,8 +29,8 @@
       </el-table-column>
       <el-table-column label="账号类型" width="120" align="center">
         <template slot-scope="scope">
-          <el-tag v-if="scope.row.type == 0" type="danger">总管理员</el-tag>
-          <el-tag v-else-if="scope.row.type == 1">子管理员</el-tag>
+          <el-tag v-if="scope.row.type === 0" type="danger">总管理员</el-tag>
+          <el-tag v-else-if="scope.row.type === 1">子管理员</el-tag>
         </template>
       </el-table-column>
 
@@ -44,7 +44,7 @@
         <template slot-scope="scope">
           <el-button size="mini" type="success" @click="editPassword(scope.row)">修改密码</el-button>
           <el-button size="mini" type="primary" @click="edit(scope.row)">编辑</el-button>
-          <el-button v-if="scope.row.username != 'admin'" size="mini" type="danger" @click="deleteAdminUser(scope.row)">删除</el-button>
+          <el-button v-if="scope.row.username !== 'admin'" size="mini" type="danger" @click="deleteAdminUser(scope.row)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -55,7 +55,7 @@
 </template>
 
 <script>
-import { getAdminUserList, deleteAdminUser, editPassword } from '@/api/table'
+import { getAdminUserList, deleteAdminUser } from '@/api/table'
 export default {
   filters: {
     statusSex(status) {
@@ -129,7 +129,8 @@ export default {
         type: 'warning'
       }).then(() => {
         deleteAdminUser({ id: event.id }).then(response => {
-          if (response.code == 20000) {
+          // eslint-disable-next-line eqeqeq
+          if (response.code === 200) {
             this.$message({
               type: 'success',
               message: '删除成功!'
@@ -157,19 +158,6 @@ export default {
         inputErrorMessage: '密码格式不正确',
         inputType: 'password'
       }).then(({ value }) => {
-        editPassword({ id: event.id, value: value }).then(response => {
-          if (response.code == 20000) {
-            this.$message({
-              type: 'success',
-              message: '修改成功'
-            })
-          } else {
-            this.$message({
-              type: 'error',
-              message: '修改失败!'
-            })
-          }
-        })
       })
     }
   }

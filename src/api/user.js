@@ -31,18 +31,18 @@ export function getUserList(params) {
   })
 }
 
-export function getUserDriver(params) {
-  return request({
-    url: '/backend/v1/driver',
-    method: 'get',
-    params
-  })
-}
-
 export function userBlock(data) {
   return request({
     url: '/backend/v1/userBlock',
     method: 'post',
+    data
+  })
+}
+
+export function userCancelBlock(data) {
+  return request({
+    url: '/backend/v1/userBlock',
+    method: 'put',
     data
   })
 }
