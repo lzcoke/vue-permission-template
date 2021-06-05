@@ -63,6 +63,13 @@ export const asyncRoutes = [
         name: 'Option',
         component: () => import('@/views/user/list'),
         meta: { title: '用户列表' }
+      },
+      {
+        path: 'create',
+        name: 'UserCreate',
+        component: () => import('@/views/user/create'),
+        hidden: true,
+        meta: { title: '编辑用户', active: '/user/index' }
       }
     ]
   },

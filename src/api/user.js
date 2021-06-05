@@ -31,6 +31,15 @@ export function getUserList(params) {
   })
 }
 
+
+export function createUser(data) {
+  return request({
+    url: '/backend/v1/user',
+    method: 'post',
+    data
+  })
+}
+
 export function userBlock(data) {
   return request({
     url: '/backend/v1/userBlock',
@@ -46,3 +55,12 @@ export function userCancelBlock(data) {
     data
   })
 }
+
+export function userUpdatePassword(data) {
+  return request({
+    url: '/backend/v1/password',
+    method: 'put',
+    data
+  })
+}
+

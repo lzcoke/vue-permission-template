@@ -2,13 +2,13 @@
   <div class="app-container">
     <el-form :inline="true" :model="searchFrom" class="demo-form-inline" size="small">
       <el-form-item>
-        <el-input v-model="searchFrom.number" placeholder="用户编号"/>
+        <el-input v-model="searchFrom.number" placeholder="用户编号" />
       </el-form-item>
       <el-form-item>
-        <el-input v-model="searchFrom.name" placeholder="用户名称"/>
+        <el-input v-model="searchFrom.name" placeholder="用户名称" />
       </el-form-item>
       <el-form-item>
-        <el-input v-model="searchFrom.email" placeholder="邮箱"/>
+        <el-input v-model="searchFrom.email" placeholder="邮箱" />
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="onSearch">查询</el-button>
@@ -16,7 +16,7 @@
     </el-form>
     <el-row class="tool">
       <el-col :span="24">
-        <el-button type="primary" size="mini" @click="blocking(scope.row)">新增用户</el-button>
+        <el-button type="primary" size="mini" @click="create()">新增用户</el-button>
       </el-col>
     </el-row>
     <el-table v-loading="listLoading" :data="list" element-loading-text="Loading" border fit highlight-current-row>
@@ -27,7 +27,7 @@
       </el-table-column>
       <el-table-column label="用户头像" width="110" align="center">
         <template slot-scope="scope">
-          <el-avatar shape="square" :size="40" fit="fit" :src="scope.row.avatar"/>
+          <el-avatar shape="square" :size="40" fit="fit" :src="scope.row.avatar" />
         </template>
       </el-table-column>
       <el-table-column label="昵称" align="center">
@@ -57,7 +57,7 @@
       </el-table-column>
       <el-table-column align="center" prop="created_at" label="创建时间" width="200">
         <template slot-scope="scope">
-          <i class="el-icon-time"/>
+          <i class="el-icon-time" />
           <span>{{ scope.row.createDate }}</span>
         </template>
       </el-table-column>
@@ -69,7 +69,7 @@
       </el-table-column>
       <el-table-column align="center" prop="created_at" label="基本操作" width="200">
         <template slot-scope="scope">
-          <el-button type="primary" size="mini" @click="blocking(scope.row)">修改密码</el-button>
+          <el-button type="primary" size="mini" @click="updatePassword(scope.row)">修改密码</el-button>
           <el-button v-if="scope.row.block === 0" type="danger" size="mini" @click="blocking(scope.row)">冻结</el-button>
           <el-button v-else type="danger" size="mini" @click="cancelBlocking(scope.row)">解冻</el-button>
         </template>
@@ -92,23 +92,22 @@
 </template>
 
 <script>
-import { getUserList, userBlock, userCancelBlock } from '@/api/user'
+import { getUserList, userBlock, userCancelBlock, userUpdatePassword } from '@/api/user'
+import md5 from 'js-md5'
 
 export default {
   filters: {
     statusFilter(status) {
       const statusMap = {
         1: 'success',
-        2: 'gray',
         0: 'danger'
       }
       return statusMap[status]
     },
     statusSex(status) {
       const statusMap = {
-        1: '男',
-        2: '女',
-        0: '保密'
+        1: '女',
+        0: '男'
       }
       return statusMap[status]
     }
@@ -205,6 +204,31 @@ export default {
           message: '已取消操作'
         })
       })
+    },
+    updatePassword(event) {
+      this.$prompt('请输入新密码', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        inputType: 'password'
+      }).then(({ value }) => {
+        // eslint-disable-next-line no-undef
+        userUpdatePassword({ userId: event.userId, password: md5(value) }).then(res => {
+          if (res.code === 200) {
+            this.$message.success('修改成功')
+            this.fetchData()
+          } else {
+            this.$message.error('网络错误')
+          }
+        })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '取消输入'
+        })
+      })
+    },
+    create() {
+      this.$router.push('/user/create')
     }
   }
 }

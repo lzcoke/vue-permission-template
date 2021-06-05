@@ -1,6 +1,11 @@
 .app-pagination {
   margin-top: 20px;
 }
-.tool{
+
+.tool {
   margin-bottom: 10px;
+}
+
+.el-cascader, .el-select {
+  width: 300px;
 }
